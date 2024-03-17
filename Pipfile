@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+nltk = "==3.8.1"
+pandas = "==2.0.3"
+spacy = "==3.7.4"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"
+
+[scripts]
+setup = "pip install -e ."
+setup_nltk = "python ./setup/nltk_setup.py"
+setup_spacy = "python -m spacy download en_core_web_sm"
+aws_sale = "python main.py"
