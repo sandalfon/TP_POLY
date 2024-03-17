@@ -50,21 +50,26 @@ def sentence_to_lemmatized_tokens(sentence: str, lem_name: str = "nltk") -> List
         return [lemmatizer.lemmatize(token, pos="v") for token in tokens]
 
 
-def clean_sentence(sentence: str, cleaner: Callable, name: str):
+def clean_sentence_to_tokens(sentence: str, cleaner: Callable, name: str):
     sentence = sentence.lower()
     sentence = re.sub(r'[^a-zA-Z0-9\s]', '', sentence)
-    stop_words = set(stopwords.words('english'))
     tokens = cleaner(sentence, name)
+    return tokens
+
+
+def clean_sentence_to_str(sentence: str, cleaner: Callable, name: str):
+    stop_words = set(stopwords.words('english'))
+    tokens = clean_sentence_to_tokens(sentence, cleaner, name)
     text = ' '.join([word for word in tokens if word not in stop_words])
     return text
 
 
 def df_apply_cleaner_on_column(df: DataFrame, column: str, cleaner: Callable, name: str) -> DataFrame:
-    df[column + '_clean'] = df[column].apply(lambda s: clean_sentence(s, cleaner, name))
+    df[column + '_clean'] = df[column].apply(lambda s: clean_sentence_to_str(s, cleaner, name))
     return df
 
 
 def df_apply_cleaner_on_columns(df: DataFrame, columns: str, cleaner: Callable, name: str) -> DataFrame:
     for column in columns:
-        df[column + '_clean'] = df[column].apply(lambda s: clean_sentence(s, cleaner, name))
+        df[column + '_clean'] = df[column].apply(lambda s: clean_sentence_to_str(s, cleaner, name))
     return df
