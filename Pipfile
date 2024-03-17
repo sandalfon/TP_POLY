@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+gensim = "==4.3.2"
 nltk = "==3.8.1"
 pandas = "==2.0.3"
 spacy = "==3.7.4"
