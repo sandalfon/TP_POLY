@@ -1,0 +1,1 @@
+from aws_sale.sentiment.sentiment import frequencies, sentiment_intensity_analysis, plot_sentiments

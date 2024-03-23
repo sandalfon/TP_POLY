@@ -29,9 +29,8 @@ def word2vec_cbow(sentences: List[List[str]]) -> Word2Vec:
 def word2vec(sentences: List[List[str]], model_name: str = "skipgram") -> Word2Vec:
     if model_name == "skipgram":
         return word2vec_skipgram(sentences)
-    else:
-        if model_name == "fasttext":
-            return word2vec_fasttext(sentences)
+    elif model_name == "fasttext":
+        return word2vec_fasttext(sentences)
     return word2vec_cbow(sentences)
 
 

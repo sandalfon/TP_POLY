@@ -57,10 +57,16 @@ def clean_sentence_to_tokens(sentence: str, cleaner: Callable, name: str):
     return tokens
 
 
-def clean_sentence_to_str(sentence: str, cleaner: Callable, name: str):
+def clean_tokens(tokens: List[str], min_word_len: int = 3) -> List[str]:
     stop_words = set(stopwords.words('english'))
-    tokens = clean_sentence_to_tokens(sentence, cleaner, name)
-    text = ' '.join([word for word in tokens if word not in stop_words])
+    words = [word.lower() for word in tokens if word not in stop_words]
+    words = [word for word in words if len(word) >= min_word_len]
+    return words
+
+
+def clean_sentence_to_str(sentence: str, cleaner: Callable, name: str, min_word_len: int = 3):
+    tokens = clean_tokens(clean_sentence_to_tokens(sentence, cleaner, name), min_word_len)
+    text = ' '.join(tokens)
     return text
 
 
