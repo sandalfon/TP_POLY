@@ -5,7 +5,8 @@ from pandas import read_csv, DataFrame
 from aws_sale.cleaning import remove_na_and_duplicate, reformat_df, sentence_to_stemmed_tokens, \
     sentence_to_lemmatized_tokens
 from aws_sale.cleaning.clean_data import df_apply_cleaner_on_columns, clean_sentence_to_tokens
-from aws_sale.semantic import word2vec_skipgram, word2vec_cbow
+from aws_sale.semantic import word2vec
+from aws_sale.semantic.word2vec import make_world_clusters, tsne_plot_similar_words, get_models_similarity
 
 
 def lem_stem(df: DataFrame):
@@ -42,9 +43,9 @@ def lem_stem(df: DataFrame):
     df_snowball.to_csv('data/output/snowball_amazon.csv')
 
 
-def word2vec(df: DataFrame, column: str, cleaner: Callable, name: str):
-    sentences = df[column].apply(lambda s: clean_sentence_to_tokens(s, cleaner, name))
-    return word2vec_skipgram(sentences), word2vec_cbow(sentences)
+def prepare(df: DataFrame, column: str, cleaner: Callable, callable_name: str, w2v_name):
+    sentences = df[column].apply(lambda s: clean_sentence_to_tokens(s, cleaner, callable_name))
+    return word2vec(sentences, w2v_name)
 
 
 df = read_csv("data/input/amazon.csv")
@@ -52,6 +53,12 @@ df = remove_na_and_duplicate(df)
 df = reformat_df(df)
 print(df.head())
 # lem_stem(df)
-res = word2vec(df, 'review_content', sentence_to_lemmatized_tokens, 'nltk')
-print(type(res))
-print(res)
+words = ['phone', 'good', 'photo']
+w2v_skip = prepare(df, 'review_content', sentence_to_lemmatized_tokens, 'nltk', 'skipgramm')
+w2v_cbow = prepare(df, 'review_content', sentence_to_lemmatized_tokens, 'nltk', 'cbow')
+w2v_fasttext = prepare(df, 'review_content', sentence_to_lemmatized_tokens, 'nltk', 'fasttext')
+df = get_models_similarity(words, [w2v_skip, w2v_cbow, w2v_fasttext], 10)
+print(df)
+embedding_clusters, word_clusters = make_world_clusters(words, w2v_cbow)
+
+tsne_plot_similar_words(words, embedding_clusters, word_clusters)
