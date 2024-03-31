@@ -8,8 +8,9 @@ from aws_sale.cleaning import sentence_to_stemmed_tokens, \
 from aws_sale.cleaning.clean_data import df_apply_cleaner_on_columns, clean_sentence_to_tokens, \
     df_apply_cleaner_on_column, remove_na_and_duplicate, reformat_df
 from aws_sale.recommendation.recommendation import prepare_df, get_avg_rating, get_sim_from_tfidf, \
-    get_product_recommendation
+    get_product_recommendation, get_product_recommendation_doc_2_vec
 from aws_sale.semantic import word2vec
+from aws_sale.semantic.doc2vec import create_document, train_doc2vec_model
 from aws_sale.semantic.word2vec import make_world_clusters, tsne_plot_similar_words, get_models_similarity
 from aws_sale.sentiment import frequencies, sentiment_intensity_analysis, plot_sentiments
 
@@ -72,6 +73,20 @@ def sentiment(df: DataFrame):
     plot_sentiments(results)
 
 
+def get_recommendation_doc_2_vec(df: DataFrame, cleaner: Callable, name: str, max_result: int,
+                                 product_index: int) -> DataFrame:
+    df = prepare_df(df, cleaner, name)
+    documents = create_document(df)
+    model = train_doc2vec_model(documents)
+    avg_rating_df = get_avg_rating(df)
+    product_id = df['product_id'][product_index]
+    product_name = df['product_name'][product_index]
+    product_rating = avg_rating_df[avg_rating_df.index == product_id]['rating'].values[0]
+    recommended_products = get_product_recommendation_doc_2_vec(df, product_index, model, avg_rating_df, max_result)
+    print("Recommendation for user who purchased product \"" + product_name + "\" with rating: " + str(product_rating))
+    return recommended_products
+
+
 def get_recommendation(df: DataFrame, cleaner: Callable, name: str, max_result, product_index: int) -> DataFrame:
     df = prepare_df(df, cleaner, name)
 
@@ -80,7 +95,7 @@ def get_recommendation(df: DataFrame, cleaner: Callable, name: str, max_result, 
     product_id = df['product_id'][product_index]
     product_name = df['product_name'][product_index]
     product_rating = avg_rating_df[avg_rating_df.index == product_id]['rating'].values[0]
-    recommended_products = get_product_recommendation(df, product_id, content_sim, avg_rating_df, max_result)
+    recommended_products = get_product_recommendation(df, product_index, content_sim, avg_rating_df, max_result)
     print("Recommendation for user who purchased product \"" + product_name + "\" with rating: " + str(product_rating))
     return recommended_products
 
@@ -92,5 +107,36 @@ print(df.head())
 # lem_stem(df)
 # w2v(df)
 # sentiment(df)
-df_reco = get_recommendation(df, sentence_to_lemmatized_tokens, 'porter', 10, int(df.shape[1] * random()))
-print(df_reco.head())
+product_index = int(random() * df.shape[1])
+clean_name = 'porter'
+max_res = 10
+print('**** {} doc2vec****'.format(clean_name))
+df_reco = get_recommendation_doc_2_vec(df, sentence_to_lemmatized_tokens, clean_name, max_res, product_index)
+print(df_reco)
+print('----------')
+print('**** {} ****'.format(clean_name))
+df_reco = get_recommendation(df, sentence_to_lemmatized_tokens, clean_name, max_res, product_index)
+print(df_reco)
+print('----------')
+clean_name = 'nltk'
+print('**** {} ****'.format(clean_name))
+df_reco = get_recommendation(df, sentence_to_lemmatized_tokens, clean_name, max_res, product_index)
+print(df_reco)
+print('----------')
+"""
+clean_name = 'spacy'
+print('**** {} ****'.format(clean_name))
+df_reco = get_recommendation(df, sentence_to_lemmatized_tokens, clean_name, 10, product_index)
+print(df_reco)
+print('----------')
+"""
+clean_name = 'snowball'
+print('**** {} ****'.format(clean_name))
+df_reco = get_recommendation(df, sentence_to_stemmed_tokens, clean_name, max_res, product_index)
+print(df_reco)
+print('----------')
+clean_name = 'porter'
+print('**** {} ****'.format(clean_name))
+df_reco = get_recommendation(df, sentence_to_stemmed_tokens, clean_name, max_res, product_index)
+print(df_reco)
+print('----------')
