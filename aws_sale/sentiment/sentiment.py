@@ -32,7 +32,7 @@ def sentiment_intensity_analysis(sentences: List[str]) -> List[dict]:
     return results
 
 
-def _list_of_sent_to_df(list_of_sentiments: List[dict]) -> DataFrame:
+def get_sentiment(list_of_sentiments: List[dict]) -> DataFrame:
     sentiments = []
     for sentiment in list_of_sentiments:
         compound = sentiment["compound"]
@@ -46,7 +46,7 @@ def _list_of_sent_to_df(list_of_sentiments: List[dict]) -> DataFrame:
 
 
 def plot_sentiments(list_of_sentiments: List[dict]):
-    df = _list_of_sent_to_df(list_of_sentiments)
+    df = get_sentiment(list_of_sentiments)
 
     sentiment_counts = df.value_counts()
 
