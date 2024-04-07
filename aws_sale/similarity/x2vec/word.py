@@ -26,12 +26,14 @@ def word2vec_cbow(sentences: List[List[str]]) -> Word2Vec:
     return model_cbow
 
 
-def word2vec(sentences: List[List[str]], model_name: str = "skipgram") -> Word2Vec:
+def word2vec(df: DataFrame, column: str, model_name: str = "skipgram") -> Word2Vec:
+    sentences = df[column].tolist()
+    tokens = [sentence.split(' ') for sentence in sentences]
     if model_name == "skipgram":
-        return word2vec_skipgram(sentences)
+        return word2vec_skipgram(tokens)
     elif model_name == "fasttext":
-        return word2vec_fasttext(sentences)
-    return word2vec_cbow(sentences)
+        return word2vec_fasttext(tokens)
+    return word2vec_cbow(tokens)
 
 
 def get_models_similarity(words: List[str], models: List[Word2Vec], nb: int) -> DataFrame:
@@ -48,7 +50,7 @@ def make_world_clusters(input_words: List[str], model: Word2Vec) -> List[List[st
     for word in input_words:
         embeddings = []
         words = []
-        for similar_word, _ in model.wv.most_similar(word, topn=10):
+        for similar_word, _ in model.wv.most_similar(positive=word, topn=10):
             words.append(similar_word)
             embeddings.append(model.wv[similar_word])
         embedding_clusters.append(embeddings)
@@ -56,7 +58,7 @@ def make_world_clusters(input_words: List[str], model: Word2Vec) -> List[List[st
     return embedding_clusters, word_clusters
 
 
-def tsne_plot_similar_words(words, embedding_clusters, word_clusters, a=0.7):
+def tsne_plot_similar_words(words: List[str], embedding_clusters: List[str], word_clusters: List[str], tag: str, a=0.7):
     tsne_model_en_2d = TSNE(perplexity=15, n_components=2, init='pca', n_iter=3500, random_state=32)
     embedding_clusters = np.array(embedding_clusters)
     n, m, k = embedding_clusters.shape
@@ -72,5 +74,5 @@ def tsne_plot_similar_words(words, embedding_clusters, word_clusters, a=0.7):
                          textcoords='offset points', ha='right', va='bottom', size=8)
     plt.legend()
     plt.grid(True)
-    plt.savefig("i.png", format='png', dpi=150, bbox_inches='tight')
+    plt.savefig("data/output/tsne_similar_words_{}.png".format(tag), format='png', dpi=150, bbox_inches='tight')
     plt.show()
