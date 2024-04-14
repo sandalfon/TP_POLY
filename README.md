@@ -16,6 +16,25 @@ disponible [ici](https://www.kaggle.com/datasets/karkavelrajaj/amazon-sales-data
 5. Rendre le code modulable
 6. Evaluer l'impact des choix
 7. Rendre un code lisible et compréhensible
- 
 
+## Install
 
+```bash
+pip install - -upgrade
+pip install pipenv
+```
+
+```bash
+pipenv install
+pipenv run setup
+```
+
+## activate env
+
+```bash
+pipenv shell
+```
+
+## Dataset
+
+[amazon sale dataset](https://www.kaggle.com/datasets/karkavelrajaj/amazon-sales-dataset?resource=download)
