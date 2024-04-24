@@ -20,7 +20,7 @@ disponible [ici](https://www.kaggle.com/datasets/karkavelrajaj/amazon-sales-data
 ## Install
 
 ```bash
-pip install - -upgrade
+pip install --upgrade pip
 pip install pipenv
 ```
 
