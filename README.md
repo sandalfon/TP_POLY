@@ -38,3 +38,21 @@ pipenv shell
 ## Dataset
 
 [amazon sale dataset](https://www.kaggle.com/datasets/karkavelrajaj/amazon-sales-dataset?resource=download)
+
+#
+
+# Chatbot
+
+[doc](https://spacy.io/universe/project/Chatterbot)
+[medium](https://medium.com/@guandika8/on-your-local-pc-a-local-chatbot-that-is-completely-offline-and-private-26b298dc4076)
+
+# Ollama
+
+[site](https://ollama.com/download)
+
+[doc llm](https://docs.mistral.ai/deployment/self-deployment/overview/)
+
+# Voice Cloning
+
+[repo](https://github.com/CorentinJ/Real-Time-Voice-Cloning?tab=readme-ov-file)
+[dataset librespeech](https://www.openslr.org/12)
