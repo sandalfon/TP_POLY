@@ -39,7 +39,9 @@ pipenv shell
 
 [amazon sale dataset](https://www.kaggle.com/datasets/karkavelrajaj/amazon-sales-dataset?resource=download)
 
-#
+# Compare
+
+[medium](https://medium.com/@aneesha161994/exploring-diverse-techniques-for-sentence-similarity-bc62058c7972)
 
 # Chatbot
 
