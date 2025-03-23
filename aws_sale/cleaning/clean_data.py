@@ -75,7 +75,7 @@ def df_apply_cleaner_on_column(df: DataFrame, column: str, cleaner: Callable, na
     return df
 
 
-def df_apply_cleaner_on_columns(df: DataFrame, columns: str, cleaner: Callable, name: str) -> DataFrame:
+def df_apply_cleaner_on_columns(df: DataFrame, columns: List[str], cleaner: Callable, name: str) -> DataFrame:
     for column in columns:
         df[column + "_clean"] = df[column].apply(lambda s: clean_sentence_to_str(s, cleaner, name))
     return df

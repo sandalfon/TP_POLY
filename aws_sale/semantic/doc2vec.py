@@ -16,7 +16,7 @@ def train_doc2vec_model(documents: List[TaggedDocument]) -> Doc2Vec:
     return model
 
 
-def get_index_similarity(tokens: List[str], model: Doc2Vec, max_result: int) -> List[int]:
+def get_index_similarity(tokens: List[int], model: Doc2Vec, max_result: int) -> List[int]:
     inferred_vector = model.infer_vector(tokens)
     sims = model.dv.most_similar([inferred_vector], topn=max_result)
     return [res[0] for res in sims]

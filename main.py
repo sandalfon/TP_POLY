@@ -3,13 +3,13 @@ from typing import Callable
 
 from pandas import DataFrame, read_csv
 
-from aws_sale.cleaning import sentence_to_stemmed_tokens, sentence_to_lemmatized_tokens
+
 from aws_sale.cleaning.clean_data import (
     df_apply_cleaner_on_columns,
     clean_sentence_to_tokens,
     df_apply_cleaner_on_column,
     remove_na_and_duplicate,
-    reformat_df,
+    reformat_df, sentence_to_stemmed_tokens, sentence_to_lemmatized_tokens,
 )
 from aws_sale.recommendation.recommendation import (
     prepare_df,

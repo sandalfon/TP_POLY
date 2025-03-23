@@ -54,7 +54,7 @@ def _get_nth_sorted_content_sim(product_index: int, content_sim: ndarray, max_re
     return [i[0] for i in sorted_sim_scores[1 : max_result + 1]]
 
 
-def _get_nth_avg_rating_product(df: DataFrame, product_id: str, avg_rating_df: DataFrame, max_result: int) -> List[int]:
+def _get_nth_avg_rating_product(df: DataFrame, product_id: int, avg_rating_df: DataFrame, max_result: int) -> List[int]:
     if product_id in avg_rating_df.index:
         current_product_rating = avg_rating_df.loc[product_id].values[0]
         ids = avg_rating_df.iloc[
@@ -81,7 +81,7 @@ def get_product_recommendation(
 
 
 def get_product_recommendation_doc_2_vec(
-    df: DataFrame, product_id: str, model: Doc2Vec, avg_rating_df: DataFrame, max_result: int
+    df: DataFrame, product_id: int, model: Doc2Vec, avg_rating_df: DataFrame, max_result: int
 ) -> DataFrame:
     content_recommendations_index = _get_nth_sorted_doc2vec_sim(df, product_id, model, max_result)
     rating_recommendation_index = _get_nth_avg_rating_product(df, product_id, avg_rating_df, max_result)
