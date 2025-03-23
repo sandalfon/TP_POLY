@@ -1,7 +1,11 @@
 from pandas import read_csv
 
-from aws_sale.cleaning import remove_na_and_duplicate, reformat_df, sentence_to_stemmed_tokens, \
-    sentence_to_lemmatized_tokens
+from aws_sale.cleaning import (
+    remove_na_and_duplicate,
+    reformat_df,
+    sentence_to_stemmed_tokens,
+    sentence_to_lemmatized_tokens,
+)
 from aws_sale.cleaning.clean_data import df_apply_cleaner_on_columns
 
 df = read_csv("data/input/amazon.csv")
@@ -23,20 +27,20 @@ lem_tokens_nltk = sentence_to_lemmatized_tokens(sentence, "nltk")
 print(lem_tokens_spacy)
 print(lem_tokens_nltk)
 
-columns = ['product_name', 'about_product', 'review_content', 'category']
+columns = ["product_name", "about_product", "review_content", "category"]
 
 print("spacy ")
-df_spacy = df_apply_cleaner_on_columns(df, columns, sentence_to_lemmatized_tokens, 'spacy')
-df_spacy.to_csv('data/output/spacy_amazon.csv')
+df_spacy = df_apply_cleaner_on_columns(df, columns, sentence_to_lemmatized_tokens, "spacy")
+df_spacy.to_csv("data/output/spacy_amazon.csv")
 
 print("nltk ")
-df_nltk = df_apply_cleaner_on_columns(df, columns, sentence_to_lemmatized_tokens, 'nltk')
-df_nltk.to_csv('data/output/nltk_amazon.csv')
+df_nltk = df_apply_cleaner_on_columns(df, columns, sentence_to_lemmatized_tokens, "nltk")
+df_nltk.to_csv("data/output/nltk_amazon.csv")
 
 print("porter ")
-df_porter = df_apply_cleaner_on_columns(df, columns, sentence_to_stemmed_tokens, 'porter')
-df_porter.to_csv('data/output/porter_amazon.csv')
+df_porter = df_apply_cleaner_on_columns(df, columns, sentence_to_stemmed_tokens, "porter")
+df_porter.to_csv("data/output/porter_amazon.csv")
 
 print("snowball ")
-df_snowball = df_apply_cleaner_on_columns(df, columns, sentence_to_stemmed_tokens, 'snowball')
-df_snowball.to_csv('data/output/snowball_amazon.csv')
+df_snowball = df_apply_cleaner_on_columns(df, columns, sentence_to_stemmed_tokens, "snowball")
+df_snowball.to_csv("data/output/snowball_amazon.csv")
