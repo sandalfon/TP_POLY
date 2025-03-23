@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 
 import matplotlib.cm as cm
 import matplotlib.pyplot as plt
@@ -43,7 +43,7 @@ def get_models_similarity(words: List[str], models: List[Word2Vec], nb: int) -> 
     return df
 
 
-def make_world_clusters(input_words: List[str], model: Word2Vec) -> List[List[str]]:
+def make_world_clusters(input_words: List[str], model: Word2Vec) -> Tuple[List[List],List[List]]:
     embedding_clusters = []
     word_clusters = []
     for word in input_words:
@@ -58,7 +58,7 @@ def make_world_clusters(input_words: List[str], model: Word2Vec) -> List[List[st
 
 
 def tsne_plot_similar_words(words, embedding_clusters, word_clusters, a=0.7):
-    tsne_model_en_2d = TSNE(perplexity=15, n_components=2, init='pca', n_iter=3500, random_state=32)
+    tsne_model_en_2d = TSNE(perplexity=15, n_components=2, init="pca", max_iter=3500, random_state=32)
     embedding_clusters = np.array(embedding_clusters)
     n, m, k = embedding_clusters.shape
     embeddings_en_2d = np.array(tsne_model_en_2d.fit_transform(embedding_clusters.reshape(n * m, k))).reshape(n, m, 2)
@@ -69,9 +69,17 @@ def tsne_plot_similar_words(words, embedding_clusters, word_clusters, a=0.7):
         y = embeddings[:, 1]
         plt.scatter(x, y, c=color.reshape(1, -1), alpha=a, label=label)
         for i, word in enumerate(words):
-            plt.annotate(word, alpha=0.5, xy=(x[i], y[i]), xytext=(5, 2),
-                         textcoords='offset points', ha='right', va='bottom', size=8)
+            plt.annotate(
+                word,
+                alpha=0.5,
+                xy=(x[i], y[i]),
+                xytext=(5, 2),
+                textcoords="offset points",
+                ha="right",
+                va="bottom",
+                size=8,
+            )
     plt.legend()
     plt.grid(True)
-    plt.savefig("i.png", format='png', dpi=150, bbox_inches='tight')
+    plt.savefig("i.png", format="png", dpi=150, bbox_inches="tight")
     plt.show()
