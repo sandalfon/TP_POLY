@@ -65,7 +65,7 @@ def _get_nth_avg_rating_product(df: DataFrame, product_id: int, avg_rating_df: D
     return []
 
 
-def _get_nth_sorted_doc2vec_sim(df: DataFrame, product_index: int, model: Doc2Vec, max_result: int) -> List[str]:
+def _get_nth_sorted_doc2vec_sim(df: DataFrame, product_index: int, model: Doc2Vec, max_result: int) -> List[int]:
     tokens = df.iloc[product_index]["review_content_clean"].split(" ")
     return get_index_similarity(tokens, model, max_result)
 
