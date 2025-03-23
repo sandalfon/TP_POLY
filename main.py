@@ -3,8 +3,14 @@ from typing import Callable
 from pandas import read_csv, DataFrame
 
 
-from aws_sale.cleaning.clean_data import df_apply_cleaner_on_columns, clean_sentence_to_tokens, \
-    sentence_to_stemmed_tokens, sentence_to_lemmatized_tokens, remove_na_and_duplicate, reformat_df
+from aws_sale.cleaning.clean_data import (
+    df_apply_cleaner_on_columns,
+    clean_sentence_to_tokens,
+    sentence_to_stemmed_tokens,
+    sentence_to_lemmatized_tokens,
+    remove_na_and_duplicate,
+    reformat_df,
+)
 from aws_sale.semantic import word2vec
 from aws_sale.semantic.word2vec import make_world_clusters, tsne_plot_similar_words, get_models_similarity
 

@@ -43,7 +43,7 @@ def get_models_similarity(words: List[str], models: List[Word2Vec], nb: int) -> 
     return df
 
 
-def make_world_clusters(input_words: List[str], model: Word2Vec) -> Tuple[List[List],List[List]]:
+def make_world_clusters(input_words: List[str], model: Word2Vec) -> Tuple[List[List], List[List]]:
     embedding_clusters = []
     word_clusters = []
     for word in input_words:
