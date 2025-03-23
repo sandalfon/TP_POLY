@@ -2,3 +2,32 @@
 name = "aws_sale"
 version = "0.0.1"
 [tool.setuptools.packages.find]
+[tool.poetry]
+name = "tp-poly"
+version = "0.1.0"
+description = ""
+authors = ["Gilles Vieira <vieira.gille@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.13"
+gensim = "^4.3.3"
+keras = "^3.9.0"
+matplotlib = "^3.10.1"
+nltk = "^3.9.1"
+pandas = "^2.2.3"
+tensorflow = "2.16.1"
+scikit-learn = "^1.6.1"
+spacy = "^3.8.4"
+scipy = ">=1.7.0,<1.14.0"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.5.5"
+pytest = "^8.3.4"
+
+[tool.ruff]
+line-length = 120
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -19,21 +19,27 @@ disponible [ici](https://www.kaggle.com/datasets/karkavelrajaj/amazon-sales-data
 
 ## Install
 
+### Poetry
+See poetry installation [page](https://python-poetry.org/docs/#installation)
+
+### Ruff
+See ruff installation [page](https://docs.astral.sh/ruff/installation/)
+
+
+## Install projext
 ```bash
-pip install --upgrade pip
-pip install pipenv
+poetry install
+poetry shell
 ```
 
+## Install models
 ```bash
-pipenv install
-pipenv run setup
+python setup/nltk_setup
+python setup/spacy_setup
 ```
 
-## activate env
-
-```bash
-pipenv shell
-```
+#### linting
+`ruff format`
 
 ## Dataset
 
