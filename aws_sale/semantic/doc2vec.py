@@ -5,7 +5,7 @@ from pandas import DataFrame
 
 
 def create_document(df: DataFrame) -> List[TaggedDocument]:
-    texts = df['review_content_clean'].tolist()
+    texts = df["review_content_clean"].tolist()
     return [TaggedDocument(doc, [i]) for i, doc in enumerate(texts)]
 
 

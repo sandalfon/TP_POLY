@@ -15,9 +15,10 @@ def _flatten_concatenation(matrix: List[List[str]]) -> List[str]:
     return flat_list
 
 
-def frequencies(df: DataFrame, cleaner: Callable, callable_name: str, remove_stop_words: bool = True,
-                word_min_len: int = 3) -> FreqDist:
-    words = df['review_content'].apply(lambda s: clean_sentence_to_tokens(s, cleaner, callable_name)).tolist()
+def frequencies(
+    df: DataFrame, cleaner: Callable, callable_name: str, remove_stop_words: bool = True, word_min_len: int = 3
+) -> FreqDist:
+    words = df["review_content"].apply(lambda s: clean_sentence_to_tokens(s, cleaner, callable_name)).tolist()
     words = _flatten_concatenation(words)
     if remove_stop_words:
         words = clean_tokens(words, word_min_len)
@@ -37,12 +38,12 @@ def get_sentiment(list_of_sentiments: List[dict]) -> DataFrame:
     for sentiment in list_of_sentiments:
         compound = sentiment["compound"]
         if compound > 0.1:
-            sentiments.append('Positive')
+            sentiments.append("Positive")
         elif compound < -0.1:
-            sentiments.append('Negative')
+            sentiments.append("Negative")
         else:
-            sentiments.append('Neutral')
-    return DataFrame(sentiments, columns=['review_sentiment'])
+            sentiments.append("Neutral")
+    return DataFrame(sentiments, columns=["review_sentiment"])
 
 
 def plot_sentiments(list_of_sentiments: List[dict]):
@@ -50,8 +51,8 @@ def plot_sentiments(list_of_sentiments: List[dict]):
 
     sentiment_counts = df.value_counts()
 
-    sentiment_counts.plot(kind='bar', color=['green', 'blue', 'red'], title='Sentiment Analysis of Review Content')
-    plt.xlabel('Sentiment')
-    plt.ylabel('Count')
-    plt.savefig("j.png", format='png', dpi=150, bbox_inches='tight')
+    sentiment_counts.plot(kind="bar", color=["green", "blue", "red"], title="Sentiment Analysis of Review Content")
+    plt.xlabel("Sentiment")
+    plt.ylabel("Count")
+    plt.savefig("j.png", format="png", dpi=150, bbox_inches="tight")
     plt.show()
